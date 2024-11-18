@@ -4,7 +4,7 @@ import db from '../database.js'
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    db.all('SELECT * FROM clients', (err, rows) => {
+    db.all('SELECT * FROM workers', (err, rows) => {
         if (err) {
             res.status(500).json({ error: err.message })
             return
@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 })
 
 router.get('/:id', (req, res) => {
-    db.get(`SELECT * FROM clients WHERE id = ${req.params.id}`, (err, rows) => {
+    db.get(`SELECT * FROM workers WHERE id = ${req.params.id}`, (err, rows) => {
         if (err) {
             res.status(500).json({ error: err.message })
             return
@@ -25,7 +25,7 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
     const { name, contact, address } = req.body
-    db.run('INSERT INTO clients (name, contact, address) VALUES (?, ?, ?)',
+    db.run('INSERT INTO workers (name, contact, address) VALUES (?, ?, ?)',
         [name, contact, address], (err) => {
             if (err) {
                 res.status(500).json({ error: err.message })
@@ -37,7 +37,7 @@ router.post('/', (req, res) => {
 
 router.patch('/:id', (req, res) => {
     const { name, contact, address } = req.body
-    db.run('UPDATE clients SET name = ?, contact = ?, address = ? WHERE id = ?',
+    db.run('UPDATE workers SET name = ?, contact = ?, address = ? WHERE id = ?',
         [name, contact, address, req.params.id], (err, rows) => {
             if (err) {
                 res.status(500).json({ error: err.message })
@@ -49,7 +49,7 @@ router.patch('/:id', (req, res) => {
 })
 
 router.delete('/:id', (req, res) => {
-    db.run('DELETE FROM clients WHERE id = ?',
+    db.run('DELETE FROM workers WHERE id = ?',
         [req.params.id], (err, rows) => {
             if (err) {
                 res.status(500).json({ error: err.message })
